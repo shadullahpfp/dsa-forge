@@ -1,0 +1,248 @@
+// DSA FORGE - Prisma Schema
+// A production-grade DSA learning platform
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// ==================== USER & AUTH ====================
+
+model User {
+  id                  String   @id @default(cuid())
+  email               String   @unique
+  name                String?
+  password            String?  // Hashed, nullable for OAuth users
+  image               String?
+  role                Role     @default(USER)
+  preferredLanguage   String   @default("javascript")
+  experienceLevel     ExperienceLevel @default(BEGINNER)
+  streak              Int      @default(0)
+  longestStreak       Int      @default(0)
+  lastActiveDate     DateTime?
+  lastSubmissionDate DateTime?
+  onboardingCompleted Boolean @default(false)
+  isBlocked           Boolean  @default(false)
+  blockedAt           DateTime?
+  blockedReason       String?
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  // Relations
+  progress    UserProgress[]
+  submissions Submission[]
+  notes       Note[]
+
+  @@map("users")
+}
+
+enum Role {
+  USER
+  CONTRIBUTOR
+  ADMIN
+}
+
+enum ExperienceLevel {
+  BEGINNER
+  INTERMEDIATE
+  ADVANCED
+}
+
+// ==================== LEARNING MODULES ====================
+
+model Module {
+  id          String   @id @default(cuid())
+  order       Int      @unique
+  title       String
+  description String
+  slug        String   @unique
+  icon        String?  // Icon name for UI
+  color       String?  // Theme color
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  topics   Topic[]
+  problems Problem[]
+  progress UserProgress[]
+
+  @@map("modules")
+}
+
+model Topic {
+  id        String   @id @default(cuid())
+  moduleId  String
+  title     String
+  slug      String
+  content   String   // Markdown content
+  order     Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  module Module @relation(fields: [moduleId], references: [id], onDelete: Cascade)
+
+  @@unique([moduleId, slug])
+  @@map("topics")
+}
+
+// ==================== PROBLEMS ====================
+
+model Problem {
+  id             String   @id @default(cuid())
+  moduleId       String
+  title          String
+  slug           String   @unique
+  difficulty     Difficulty
+  description    String   // Markdown
+  constraints    String   // Markdown
+  examples       String   // JSON array
+  intuition      String   // Markdown - Real-world intuition
+  thinkSection   String   // JSON - Mandatory thinking questions
+  bruteForce     String   // Markdown
+  optimization   String   // Markdown
+  solution       String   // JSON - Multiple language solutions
+  timeComplexity String
+  spaceComplexity String
+  starterCode    String   // JSON - language -> code
+  testCases      String   // JSON - test cases
+  hints          String   // JSON array of hints
+  order          Int
+  isDaily        Boolean  @default(false)
+  dailyDate      DateTime?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  // Relations
+  module          Module           @relation(fields: [moduleId], references: [id], onDelete: Cascade)
+  submissions     Submission[]
+  notes           Note[]
+  dailyChallenges DailyChallenge[]
+
+  @@map("problems")
+}
+
+enum Difficulty {
+  EASY
+  MEDIUM
+  HARD
+}
+
+// ==================== USER PROGRESS ====================
+
+model UserProgress {
+  id               String   @id @default(cuid())
+  userId           String
+  moduleId         String
+  completed        Boolean  @default(false)
+  completedTopics  String   @default("[]") // JSON array of topic IDs
+  completedProblems String  @default("[]") // JSON array of problem IDs
+  currentProblemId String?
+  startedAt        DateTime @default(now())
+  completedAt      DateTime?
+  updatedAt        DateTime @updatedAt
+
+  // Relations
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  module Module @relation(fields: [moduleId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, moduleId])
+  @@map("user_progress")
+}
+
+// ==================== SUBMISSIONS ====================
+
+model Submission {
+  id            String          @id @default(cuid())
+  userId        String
+  problemId     String
+  code          String
+  language      String
+  status        SubmissionStatus
+  executionTime Int?            // in milliseconds
+  memoryUsed    Int?            // in KB
+  testCasesPassed Int?
+  totalTestCases Int?
+  errorMessage  String?
+  createdAt     DateTime        @default(now())
+
+  // Relations
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  problem Problem @relation(fields: [problemId], references: [id], onDelete: Cascade)
+
+  @@map("submissions")
+}
+
+enum SubmissionStatus {
+  PENDING
+  RUNNING
+  ACCEPTED
+  WRONG_ANSWER
+  TIME_LIMIT_EXCEEDED
+  MEMORY_LIMIT_EXCEEDED
+  COMPILATION_ERROR
+  RUNTIME_ERROR
+}
+
+// ==================== NOTES ====================
+
+model Note {
+  id        String   @id @default(cuid())
+  userId    String
+  problemId String
+  content   String   // Markdown
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  problem Problem @relation(fields: [problemId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, problemId])
+  @@map("notes")
+}
+
+// ==================== DAILY CHALLENGE ====================
+
+model DailyChallenge {
+  id        String   @id @default(cuid())
+  problemId String
+  date      DateTime @default(now())
+  createdAt DateTime @default(now())
+
+  // Relations
+  problem Problem @relation(fields: [problemId], references: [id], onDelete: Cascade)
+
+  @@unique([date])
+  @@map("daily_challenges")
+}
+
+// ==================== AUDIT LOG ====================
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  adminId   String
+  action    String   // BLOCK_USER, DELETE_USER, CREATE_PROBLEM, etc.
+  targetType String  // USER, PROBLEM, MODULE, etc.
+  targetId  String?
+  details   String   // JSON
+  createdAt DateTime @default(now())
+
+  @@map("audit_logs")
+}
+
+// ==================== APP SETTINGS ====================
+
+model AppSettings {
+  id              String   @id @default(cuid())
+  key             String   @unique
+  value           String   // JSON or boolean as string
+  description     String?
+  updatedAt       DateTime @updatedAt
+  
+  @@map("app_settings")
+}
