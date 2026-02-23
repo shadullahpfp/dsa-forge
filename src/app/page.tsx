@@ -88,7 +88,7 @@ export default function Home() {
         // Load modules
         const modulesRes = await fetch('/api/modules')
         const modulesData = await modulesRes.json()
-        setModules(modulesData)
+        setModules(Array.isArray(modulesData.modules) ? modulesData.modules : [])
 
         // Load user progress
         const progressRes = await fetch(`/api/progress?userId=${user.id}`)
@@ -327,18 +327,16 @@ export default function Home() {
             return (
               <div
                 key={mod.order}
-                className={`relative p-4 rounded-xl border bg-card text-center transition-all ${
-                  index === 0
+                className={`relative p-4 rounded-xl border bg-card text-center transition-all ${index === 0
                     ? 'border-primary bg-primary/5'
                     : 'opacity-75'
-                }`}
+                  }`}
               >
                 {index > 0 && (
                   <Lock className="absolute top-2 right-2 h-3 w-3 text-muted-foreground" />
                 )}
-                <div className={`h-10 w-10 mx-auto rounded-lg flex items-center justify-center mb-2 ${
-                  index === 0 ? 'bg-primary text-primary-foreground' : 'bg-muted'
-                }`}>
+                <div className={`h-10 w-10 mx-auto rounded-lg flex items-center justify-center mb-2 ${index === 0 ? 'bg-primary text-primary-foreground' : 'bg-muted'
+                  }`}>
                   <Icon className="h-5 w-5" />
                 </div>
                 <p className="text-xs font-medium">Module {mod.order}</p>

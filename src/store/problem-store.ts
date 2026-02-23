@@ -107,7 +107,7 @@ export const useProblemStore = create<ProblemState>((set) => ({
   userProgress: [],
   dailyChallenge: null,
 
-  setModules: (modules) => set({ modules }),
+  setModules: (modules) => set({ modules: Array.isArray(modules) ? modules : [] }),
   setCurrentModule: (module) => set({ currentModule: module }),
   setCurrentProblem: (problem) => set({ currentProblem: problem }),
   setCode: (code) => set({ code }),

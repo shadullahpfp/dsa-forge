@@ -69,7 +69,7 @@ export function Sidebar({ className }: SidebarProps) {
   const handleModuleClick = (module: Module) => {
     const moduleIndex = modules.findIndex((m) => m.id === module.id)
     const previousModules = modules.slice(0, moduleIndex)
-    
+
     const allPreviousCompleted = previousModules.every((m) => {
       const progress = getModuleProgress(m.id)
       return progress?.completed
@@ -128,7 +128,7 @@ export function Sidebar({ className }: SidebarProps) {
           <div className="px-3 py-2 mt-4">
             <h2 className="mb-2 px-4 text-sm font-semibold text-muted-foreground">Modules</h2>
             <div className="space-y-1">
-              {modules.map((module, index) => {
+              {Array.isArray(modules) && modules.map((module, index) => {
                 const Icon = moduleIcons[module.order] || BookOpen
                 const progress = getModuleProgress(module.id)
                 const locked = isModuleLocked(index)
