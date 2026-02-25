@@ -115,6 +115,6 @@ export const useProblemStore = create<ProblemState>((set) => ({
   setIsRunning: (running) => set({ isRunning: running }),
   setIsSubmitting: (submitting) => set({ isSubmitting: submitting }),
   setSubmissionResult: (result) => set({ submissionResult: result }),
-  setUserProgress: (progress) => set({ userProgress: progress }),
+  setUserProgress: (progress) => set({ userProgress: Array.isArray(progress) ? progress : [] }),
   setDailyChallenge: (problem) => set({ dailyChallenge: problem }),
 }))

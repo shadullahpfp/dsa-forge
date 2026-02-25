@@ -66,8 +66,11 @@ export async function PUT(request: NextRequest) {
       streak: user.streak,
       onboardingCompleted: user.onboardingCompleted,
     })
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error updating user:', error)
+    if (error.code === 'P2025') {
+      return NextResponse.json({ error: 'User not found in database. Please log in again.' }, { status: 404 })
+    }
     return NextResponse.json({ error: 'Failed to update user' }, { status: 500 })
   }
 }

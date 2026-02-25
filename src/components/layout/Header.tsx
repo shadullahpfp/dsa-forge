@@ -16,7 +16,7 @@ import { useUIStore } from '@/store/ui-store'
 import { useState, useSyncExternalStore } from 'react'
 
 // Empty store for hydration
-const emptyStore = { subscribe: () => () => {} }
+const emptyStore = { subscribe: () => () => { } }
 
 export function Header() {
   const { theme, setTheme } = useTheme()
@@ -142,15 +142,31 @@ export function Header() {
               </DropdownMenuTrigger>
               <DropdownMenuContent className="w-56" align="end" forceMount>
                 <div className="flex flex-col space-y-1 p-2">
-                  <p className="text-sm font-medium leading-none">{user.name}</p>
+                  <div className="flex items-center gap-2">
+                    <p className="text-sm font-medium leading-none">{user.name}</p>
+                    {(user.role === 'ADMIN' || user.email === 'acontrol030@gmail.com') && (
+                      <span className="text-[10px] font-bold bg-destructive text-destructive-foreground px-1.5 py-0.5 rounded uppercase tracking-wider">
+                        ADMIN
+                      </span>
+                    )}
+                  </div>
                   <p className="text-xs leading-none text-muted-foreground">{user.email}</p>
                   <div className="flex items-center gap-1 mt-1">
-                    <span className="text-xs bg-primary/10 text-primary px-2 py-0.5 rounded-full">
+                    <span className="text-xs bg-primary/10 text-primary px-2 py-0.5 rounded-full font-medium">
                       {user.streak} day streak
                     </span>
                   </div>
                 </div>
                 <DropdownMenuSeparator />
+                {(user.role === 'ADMIN' || user.email === 'acontrol030@gmail.com') && (
+                  <>
+                    <DropdownMenuItem onClick={() => setCurrentView('admin')}>
+                      <Settings className="mr-2 h-4 w-4" />
+                      Admin Dashboard
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                  </>
+                )}
                 <DropdownMenuItem onClick={() => setCurrentView('profile')}>
                   <User className="mr-2 h-4 w-4" />
                   Profile

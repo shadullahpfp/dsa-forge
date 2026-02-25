@@ -21,6 +21,7 @@ import {
   BarChart3,
 } from 'lucide-react'
 import { ADMIN_EMAIL, SUPPORT_EMAIL } from '@/lib/config'
+import { AdminContent } from './AdminContent'
 
 interface UserStats {
   total: number
@@ -48,7 +49,7 @@ export function AdminDashboard() {
 
   useEffect(() => {
     if (!isAdmin) return
-    
+
     const loadAdminData = async () => {
       try {
         // In production, these would be real API calls
@@ -61,7 +62,7 @@ export function AdminDashboard() {
         setLoading(false)
       }
     }
-    
+
     loadAdminData()
   }, [isAdmin])
 
@@ -99,9 +100,9 @@ export function AdminDashboard() {
           <h1 className="text-3xl font-bold">Admin Dashboard</h1>
           <p className="text-muted-foreground">Manage users, content, and platform settings</p>
         </div>
-        <Badge variant="outline" className="gap-2 px-3 py-1">
+        <Badge variant="destructive" className="gap-2 px-3 py-1">
           <Shield className="h-4 w-4" />
-          Admin
+          ADMIN
         </Badge>
       </div>
 
@@ -247,38 +248,7 @@ export function AdminDashboard() {
         </TabsContent>
 
         <TabsContent value="content">
-          <Card>
-            <CardHeader>
-              <CardTitle>Content Management</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                  <Card className="border-dashed">
-                    <CardContent className="p-6 text-center">
-                      <FileCode className="h-8 w-8 mx-auto mb-2 text-muted-foreground" />
-                      <p className="font-medium">Add New Problem</p>
-                      <p className="text-sm text-muted-foreground">Create a new problem</p>
-                    </CardContent>
-                  </Card>
-                  <Card className="border-dashed">
-                    <CardContent className="p-6 text-center">
-                      <FileCode className="h-8 w-8 mx-auto mb-2 text-muted-foreground" />
-                      <p className="font-medium">Add New Module</p>
-                      <p className="text-sm text-muted-foreground">Create a new module</p>
-                    </CardContent>
-                  </Card>
-                  <Card className="border-dashed">
-                    <CardContent className="p-6 text-center">
-                      <Activity className="h-8 w-8 mx-auto mb-2 text-muted-foreground" />
-                      <p className="font-medium">Daily Challenge</p>
-                      <p className="text-sm text-muted-foreground">Set today's challenge</p>
-                    </CardContent>
-                  </Card>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+          <AdminContent />
         </TabsContent>
 
         <TabsContent value="settings">

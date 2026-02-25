@@ -136,25 +136,34 @@ export function Sidebar({ className }: SidebarProps) {
                 const problemsCount = module.problems?.length || 0
 
                 return (
-                  <div key={module.id} className="relative">
+                  <div key={module.id} className="relative group/sidebar-item mb-1">
+                    {isActive && (
+                      <div className="absolute inset-y-0 left-0 w-1 bg-primary rounded-r-md shadow-[0_0_10px_rgba(var(--primary),0.5)]" />
+                    )}
                     <Button
                       variant={isActive ? 'secondary' : 'ghost'}
                       className={cn(
-                        'w-full justify-start gap-2 h-auto py-2',
-                        locked && 'opacity-50 cursor-not-allowed'
+                        'w-full justify-start gap-3 h-auto py-2.5 transition-all duration-300 relative overflow-hidden',
+                        locked ? 'opacity-50 cursor-not-allowed hover:bg-transparent animate-pulse' : 'hover:bg-primary/5 hover:translate-x-1',
+                        isActive && 'bg-primary/10 hover:bg-primary/15 dark:bg-primary/20 ring-2 ring-primary/40 shadow-lg'
                       )}
-                      onClick={() => handleModuleClick(module)}
+                      onClick={() => !locked && handleModuleClick(module)}
                       disabled={locked}
                     >
-                      <div className="flex items-center gap-2 flex-1">
+                      {isActive && (
+                        <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-transparent opacity-50 pointer-events-none" />
+                      )}
+                      <div className="flex items-center gap-3 flex-1 relative z-10">
                         <div
                           className={cn(
-                            'flex h-8 w-8 shrink-0 items-center justify-center rounded-lg',
+                            'flex h-8 w-8 shrink-0 items-center justify-center rounded-lg transition-all duration-500',
                             progress?.completed
-                              ? 'bg-green-500/10 text-green-600 dark:text-green-400'
+                              ? 'bg-green-500 text-white shadow-md shadow-green-500/20 scale-100'
                               : isActive
-                                ? 'bg-primary/10 text-primary'
-                                : 'bg-muted'
+                                ? 'bg-primary text-primary-foreground shadow-lg shadow-primary/30 scale-110'
+                                : locked
+                                  ? 'bg-muted text-muted-foreground scale-95'
+                                  : 'bg-muted/50 text-foreground group-hover/sidebar-item:bg-primary/20 group-hover/sidebar-item:text-primary scale-100'
                           )}
                         >
                           {progress?.completed ? (
@@ -165,26 +174,34 @@ export function Sidebar({ className }: SidebarProps) {
                             <Icon className="h-4 w-4" />
                           )}
                         </div>
-                        <div className="flex flex-col items-start text-left">
-                          <span className="text-sm font-medium line-clamp-1">
-                            Module {module.order}: {module.title}
+                        <div className="flex flex-col items-start text-left flex-1 min-w-0">
+                          <span className={cn(
+                            "text-sm font-medium truncate w-full transition-colors",
+                            isActive ? "text-primary" : "text-foreground"
+                          )}>
+                            {module.order}: {module.title}
                           </span>
-                          <span className="text-xs text-muted-foreground">
-                            {problemsCount} problems
+                          <span className="text-[10px] text-muted-foreground font-medium mt-0.5">
+                            {problemsCount} problem{problemsCount !== 1 ? 's' : ''}
                           </span>
                         </div>
                       </div>
-                      {!locked && <ChevronRight className="h-4 w-4 ml-auto" />}
+                      {!locked && (
+                        <ChevronRight className={cn(
+                          "h-4 w-4 ml-auto shrink-0 transition-transform duration-300",
+                          isActive ? "text-primary translate-x-1" : "text-muted-foreground opacity-0 -translate-x-2 group-hover/sidebar-item:opacity-100 group-hover/sidebar-item:translate-x-0"
+                        )} />
+                      )}
                     </Button>
                     {progress && !progress.completed && !locked && (
-                      <div className="px-4 pb-2">
+                      <div className="px-4 pb-2 pt-1 relative z-10">
                         <Progress
                           value={
                             ((progress.completedTopics?.length || 0) /
                               (module.topics?.length || 1)) *
                             100
                           }
-                          className="h-1"
+                          className="h-1 bg-primary/10"
                         />
                       </div>
                     )}

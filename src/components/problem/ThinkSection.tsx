@@ -69,7 +69,7 @@ export function ThinkSection({ open, onOpenChange, questions, onConfirm }: Think
     },
   ]
 
-  const displayQuestions = questions.length > 0 ? questions : defaultQuestions
+  const displayQuestions = Array.isArray(questions) && questions.length > 0 ? questions : defaultQuestions
   const currentQ = displayQuestions[currentQuestion]
 
   return (
@@ -90,9 +90,8 @@ export function ThinkSection({ open, onOpenChange, questions, onConfirm }: Think
             {displayQuestions.map((_, index) => (
               <div
                 key={index}
-                className={`h-2 flex-1 rounded-full transition-colors ${
-                  index <= currentQuestion ? 'bg-primary' : 'bg-muted'
-                }`}
+                className={`h-2 flex-1 rounded-full transition-colors ${index <= currentQuestion ? 'bg-primary' : 'bg-muted'
+                  }`}
               />
             ))}
           </div>

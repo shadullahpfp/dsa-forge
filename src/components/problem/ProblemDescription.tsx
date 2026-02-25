@@ -109,7 +109,7 @@ export function ProblemDescription({ problem }: ProblemDescriptionProps) {
       <div>
         <h3 className="font-semibold mb-3">Test Cases</h3>
         <div className="space-y-3">
-          {problem.testCases?.slice(0, 3).map((tc, index) => (
+          {(Array.isArray(problem.testCases) ? problem.testCases : []).slice(0, 3).map((tc, index) => (
             <div key={index} className="bg-muted/50 p-4 rounded-lg">
               <div className="grid gap-2 sm:grid-cols-2">
                 <div>

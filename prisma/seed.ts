@@ -175,6 +175,73 @@ Think about:
     hints: JSON.stringify(['Use the + operator', 'Return the result directly']),
     order: 1,
   },
+  {
+    moduleId: 'module-0',
+    title: 'Hello World',
+    slug: 'hello-world',
+    difficulty: 'EASY',
+    description: `Write a function that returns the exact string "Hello World".\n\nThis is a classic first problem to ensure you understand how to return a basic string.`,
+    constraints: `None`,
+    examples: JSON.stringify([
+      { input: 'None', output: '"Hello World"', explanation: 'The function automatically returns the greeting.' },
+    ]),
+    intuition: `Strings are sequences of characters. Here we are just familiarizing ourselves with the return statement.`,
+    thinkSection: JSON.stringify([
+      { id: '1', question: 'What keyword breaks out of a function and passes back a value?', hint: 'It starts with r' },
+    ]),
+    bruteForce: `Just return the string directly.`,
+    optimization: `No optimization needed.`,
+    solution: JSON.stringify([
+      { language: 'javascript', code: `function helloWorld() {\n  return "Hello World";\n}`, explanation: 'Return the exact string' },
+      { language: 'python', code: `def helloWorld():\n    return "Hello World"`, explanation: 'Return the exact string' },
+    ]),
+    timeComplexity: 'O(1)',
+    spaceComplexity: 'O(1)',
+    starterCode: JSON.stringify({
+      javascript: `function helloWorld() {\n  // Your code here\n  return "";\n}`,
+      python: `def helloWorld():\n    # Your code here\n    return ""`,
+    }),
+    testCases: JSON.stringify([
+      { input: '', expectedOutput: '"Hello World"' },
+    ]),
+    hints: JSON.stringify(['Ensure your capitalization is exactly "Hello World"', 'Use the return keyword']),
+    order: 2,
+  },
+  {
+    moduleId: 'module-0',
+    title: 'Maximum of Two Numbers',
+    slug: 'maximum-of-two',
+    difficulty: 'EASY',
+    description: `Given two integers \`a\` and \`b\`, write a function to return the larger of the two.\n\nThis teaches basic conditional logic (if/else statements).`,
+    constraints: `-1000 <= a, b <= 1000`,
+    examples: JSON.stringify([
+      { input: 'a = 5, b = 10', output: '10', explanation: '10 is greater than 5' },
+      { input: 'a = 20, b = 20', output: '20', explanation: 'They are equal, so returning 20 is correct' },
+    ]),
+    intuition: `We need to compare two values. Almost all languages provide a built-in max function, but understanding the underlying if/else conditional is important.`,
+    thinkSection: JSON.stringify([
+      { id: '1', question: 'How do you execute code only when a condition is met?', hint: 'Think about if statements' },
+    ]),
+    bruteForce: `Use an if statement to compare a and b.`,
+    optimization: `Many languages provide built in Math.max or max functions which are extremely efficient.`,
+    solution: JSON.stringify([
+      { language: 'javascript', code: `function maxNumber(a, b) {\n  return Math.max(a, b);\n}`, explanation: 'Using built-in Math.max' },
+      { language: 'python', code: `def maxNumber(a, b):\n    return max(a, b)`, explanation: 'Using built-in max' },
+    ]),
+    timeComplexity: 'O(1)',
+    spaceComplexity: 'O(1)',
+    starterCode: JSON.stringify({
+      javascript: `function maxNumber(a, b) {\n  // Your code here\n  return 0;\n}`,
+      python: `def maxNumber(a, b):\n    # Your code here\n    return 0`,
+    }),
+    testCases: JSON.stringify([
+      { input: 'a = 5, b = 10', expectedOutput: '10' },
+      { input: 'a = 20, b = 20', expectedOutput: '20' },
+      { input: 'a = -5, b = -2', expectedOutput: '-2' },
+    ]),
+    hints: JSON.stringify(['Try using an if statement: if (a > b)', 'Alternatively, look up your language\'s built-in max function']),
+    order: 3,
+  },
   // Module 1: Arrays & Strings
   {
     moduleId: 'module-1',
@@ -1002,21 +1069,21 @@ return dp[n]
 async function main() {
   console.log('🌱 Starting seed...')
 
-  // Clear existing data
-  await prisma.submission.deleteMany()
-  await prisma.note.deleteMany()
-  await prisma.dailyChallenge.deleteMany()
-  await prisma.userProgress.deleteMany()
-  await prisma.problem.deleteMany()
-  await prisma.topic.deleteMany()
-  await prisma.module.deleteMany()
+  // Clear existing data (REMOVED FOR SAFETY - IDEMPOTENT SEED)
+  console.log('✅ Skipping data clear for safe idempotent seed')
 
-  console.log('✅ Cleared existing data')
-
-  // Create modules
+  // Create or update modules
   for (const moduleData of modules) {
-    await prisma.module.create({
-      data: {
+    await prisma.module.upsert({
+      where: { slug: moduleData.slug },
+      update: {
+        order: moduleData.order,
+        title: moduleData.title,
+        description: moduleData.description,
+        icon: moduleData.icon,
+        color: moduleData.color,
+      },
+      create: {
         order: moduleData.order,
         title: moduleData.title,
         description: moduleData.description,
@@ -1027,45 +1094,51 @@ async function main() {
     })
   }
 
-  console.log('✅ Created modules')
+  console.log('✅ Updated modules')
 
   // Get module IDs
   const dbModules = await prisma.module.findMany({
     orderBy: { order: 'asc' },
   })
 
-  // Create problems
+  // Check and create problems idempotently
   for (const problemData of problems) {
     const moduleIndex = parseInt(problemData.moduleId.split('-')[1])
     const targetModule = dbModules[moduleIndex]
 
     if (targetModule) {
-      await prisma.problem.create({
-        data: {
-          moduleId: targetModule.id,
-          title: problemData.title,
-          slug: problemData.slug,
-          difficulty: problemData.difficulty as any,
-          description: problemData.description,
-          constraints: problemData.constraints,
-          examples: problemData.examples,
-          intuition: problemData.intuition,
-          thinkSection: problemData.thinkSection,
-          bruteForce: problemData.bruteForce,
-          optimization: problemData.optimization,
-          solution: problemData.solution,
-          timeComplexity: problemData.timeComplexity,
-          spaceComplexity: problemData.spaceComplexity,
-          starterCode: problemData.starterCode,
-          testCases: problemData.testCases,
-          hints: problemData.hints,
-          order: problemData.order,
-        },
+      const existingProblem = await prisma.problem.findUnique({
+        where: { slug: problemData.slug }
       })
+
+      if (!existingProblem) {
+        await prisma.problem.create({
+          data: {
+            moduleId: targetModule.id,
+            title: problemData.title,
+            slug: problemData.slug,
+            difficulty: problemData.difficulty as any,
+            description: problemData.description,
+            constraints: problemData.constraints,
+            examples: problemData.examples,
+            intuition: problemData.intuition,
+            thinkSection: problemData.thinkSection,
+            bruteForce: problemData.bruteForce,
+            optimization: problemData.optimization,
+            solution: problemData.solution,
+            timeComplexity: problemData.timeComplexity,
+            spaceComplexity: problemData.spaceComplexity,
+            starterCode: problemData.starterCode,
+            testCases: problemData.testCases,
+            hints: problemData.hints,
+            order: problemData.order,
+          },
+        })
+      }
     }
   }
 
-  console.log('✅ Created problems')
+  console.log('✅ Created missing problems')
 
   // Create a demo user (only if doesn't exist)
   const existingUser = await prisma.user.findUnique({

@@ -62,6 +62,7 @@ model Module {
   slug        String   @unique
   icon        String?  // Icon name for UI
   color       String?  // Theme color
+  published   Boolean  @default(false)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 

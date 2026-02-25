@@ -93,12 +93,12 @@ export default function Home() {
         // Load user progress
         const progressRes = await fetch(`/api/progress?userId=${user.id}`)
         const progressData = await progressRes.json()
-        setUserProgress(progressData.progress || [])
+        setUserProgress(Array.isArray(progressData?.progress) ? progressData.progress : [])
 
         // Load daily challenge
         const dailyRes = await fetch('/api/daily')
         const dailyData = await dailyRes.json()
-        setDailyChallenge(dailyData)
+        setDailyChallenge(dailyData?.error ? null : dailyData)
 
         setDataLoaded(true)
       } catch (error) {
@@ -328,8 +328,8 @@ export default function Home() {
               <div
                 key={mod.order}
                 className={`relative p-4 rounded-xl border bg-card text-center transition-all ${index === 0
-                    ? 'border-primary bg-primary/5'
-                    : 'opacity-75'
+                  ? 'border-primary bg-primary/5'
+                  : 'opacity-75'
                   }`}
               >
                 {index > 0 && (
@@ -361,25 +361,52 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Footer */}
-      <footer className="border-t py-12">
-        <div className="container px-4 mx-auto max-w-7xl">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <div className="flex items-center gap-2">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground font-bold text-sm">
-                DF
+      {/* Production Footer */}
+      <footer className="border-t relative overflow-hidden bg-gradient-to-b from-background to-primary/5 mt-20">
+        <div className="container px-6 py-16 mx-auto max-w-7xl relative z-10">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-8">
+            <div className="col-span-1 md:col-span-2 space-y-4">
+              <div className="flex items-center gap-3">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-primary-foreground font-bold text-lg shadow-lg shadow-primary/20">
+                  DF
+                </div>
+                <span className="font-bold text-xl tracking-tight">DSA FORGE</span>
               </div>
-              <span className="font-semibold">DSA FORGE</span>
+              <p className="text-muted-foreground text-sm max-w-md leading-relaxed">
+                A production-grade platform dedicated to mastering Data Structures and Algorithms. Structured learning, interactive coding, and real-time progress tracking.
+              </p>
             </div>
-            <div className="flex items-center gap-6 text-sm">
-              <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">Docs</a>
-              <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">About</a>
-              <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">Privacy</a>
-              <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">Terms</a>
+
+            <div className="space-y-4">
+              <h4 className="font-semibold text-foreground">Resources</h4>
+              <nav className="flex flex-col gap-3 text-sm">
+                <a href="/docs" className="text-muted-foreground hover:text-primary transition-colors w-fit">Documentation</a>
+                <a href="/about" className="text-muted-foreground hover:text-primary transition-colors w-fit">About Us</a>
+                <a href="/privacy" className="text-muted-foreground hover:text-primary transition-colors w-fit">Privacy Policy</a>
+                <a href="/terms" className="text-muted-foreground hover:text-primary transition-colors w-fit">Terms of Service</a>
+              </nav>
             </div>
-            <p className="text-sm text-muted-foreground">
-              Contact & Support: acontrol030@gmail.com
-            </p>
+
+            <div className="space-y-4">
+              <h4 className="font-semibold text-foreground">Contact</h4>
+              <div className="text-sm text-muted-foreground space-y-2">
+                <p>Have questions or need support?</p>
+                <a href="mailto:acontrol030@gmail.com" className="block text-primary hover:underline transition-all">
+                  acontrol030@gmail.com
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div className="border-t mt-16 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-muted-foreground">
+            <p>© {new Date().getFullYear()} DSA FORGE. All rights reserved.</p>
+            <div className="flex bg-primary/10 px-3 py-1.5 rounded-full text-xs font-medium text-primary">
+              <span className="relative flex h-2 w-2 mr-2 self-center">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+              </span>
+              All systems operational
+            </div>
           </div>
         </div>
       </footer>

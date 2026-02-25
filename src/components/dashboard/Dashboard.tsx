@@ -77,7 +77,8 @@ export function Dashboard() {
 
       <div className="grid gap-6 lg:grid-cols-3">
         <div className="lg:col-span-2 space-y-6">
-          <Card>
+          <Card className="relative overflow-hidden transition-all duration-300 transform-gpu group hover:shadow-xl hover:shadow-primary/10 bg-gradient-to-br from-card to-card/50">
+            <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/5 transition-colors duration-500 pointer-events-none" />
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <BookOpen className="h-5 w-5" />
@@ -87,14 +88,14 @@ export function Dashboard() {
             <CardContent className="space-y-4">
               <div className="flex items-center justify-between">
                 <span className="text-sm font-medium">Overall Progress</span>
-                <span className="text-sm text-muted-foreground">
+                <span className="text-sm text-muted-foreground bg-primary/10 text-primary px-2 py-1 rounded-md">
                   {Math.round((completedModules / modules.length) * 100)}%
                 </span>
               </div>
-              <Progress value={(completedModules / modules.length) * 100} className="h-2" />
+              <Progress value={(completedModules / modules.length) * 100} className="h-2 group-hover:bg-primary/20 transition-colors" />
 
-              <div className="grid grid-cols-4 sm:grid-cols-7 gap-2 mt-6">
-                {modules.slice(0, 7).map((module, index) => {
+              <div className="grid grid-cols-4 sm:grid-cols-7 gap-3 mt-6">
+                {Array.isArray(modules) && modules.slice(0, 7).map((module, index) => {
                   const progress = userProgress.find((p) => p.moduleId === module.id)
                   const isCompleted = progress?.completed
                   const isCurrent = index === currentModuleIndex
@@ -110,28 +111,28 @@ export function Dashboard() {
                         }
                       }}
                       disabled={isLocked}
-                      className={`relative flex flex-col items-center justify-center p-3 rounded-lg border-2 transition-all ${
-                        isCompleted
-                          ? 'border-green-500 bg-green-500/10'
-                          : isCurrent
-                            ? 'border-primary bg-primary/10'
-                            : isLocked
-                              ? 'border-muted bg-muted/50 opacity-50 cursor-not-allowed'
-                              : 'border-muted hover:border-primary/50'
-                      }`}
+                      className={`relative flex flex-col items-center justify-center p-3 rounded-xl border-2 transition-all duration-300 transform-gpu ${isCompleted
+                        ? 'border-green-500 bg-green-500/10 hover:-translate-y-1 hover:shadow-lg hover:shadow-green-500/20'
+                        : isCurrent
+                          ? 'border-primary bg-primary/10 hover:-translate-y-1 hover:shadow-lg hover:shadow-primary/20 ring-2 ring-primary/20 ring-offset-2 ring-offset-background scale-105'
+                          : isLocked
+                            ? 'border-muted bg-muted/20 opacity-40 cursor-not-allowed'
+                            : 'border-muted hover:border-primary/50 hover:-translate-y-1 hover:bg-primary/5'
+                        }`}
+                      style={{ transformStyle: 'preserve-3d' }}
                     >
                       {isCompleted ? (
-                        <CheckCircle2 className="h-6 w-6 text-green-600 dark:text-green-400" />
+                        <CheckCircle2 className="h-6 w-6 text-green-600 dark:text-green-400" style={{ transform: 'translateZ(10px)' }} />
                       ) : isLocked ? (
-                        <Lock className="h-6 w-6 text-muted-foreground" />
+                        <Lock className="h-6 w-6 text-muted-foreground" style={{ transform: 'translateZ(5px)' }} />
                       ) : (
-                        <span className="text-lg font-bold">{module.order}</span>
+                        <span className="text-lg font-bold" style={{ transform: 'translateZ(15px)' }}>{module.order}</span>
                       )}
-                      <span className="text-xs mt-1 text-center line-clamp-1">
+                      <span className="text-[10px] mt-2 text-center line-clamp-1 font-medium" style={{ transform: 'translateZ(5px)' }}>
                         {module.title}
                       </span>
                       {isCurrent && (
-                        <span className="absolute -top-2 -right-2 w-4 h-4 bg-primary rounded-full flex items-center justify-center">
+                        <span className="absolute -top-2 -right-2 w-5 h-5 bg-primary shadow-lg shadow-primary/40 rounded-full flex items-center justify-center animate-bounce">
                           <span className="text-[10px] text-primary-foreground font-bold">!</span>
                         </span>
                       )}
@@ -141,17 +142,18 @@ export function Dashboard() {
               </div>
 
               {currentModule && (
-                <div className="mt-6 p-4 bg-muted rounded-lg">
-                  <div className="flex items-center justify-between">
+                <div className="mt-8 relative overflow-hidden p-5 rounded-xl border border-primary/20 bg-gradient-to-r from-primary/10 via-background to-background group/continue hover:border-primary/40 transition-all duration-300">
+                  <div className="absolute inset-y-0 left-0 w-1 bg-primary group-hover/continue:w-2 transition-all duration-300" />
+                  <div className="flex items-center justify-between relative z-10">
                     <div>
-                      <p className="font-medium">Continue Learning</p>
-                      <p className="text-sm text-muted-foreground">
+                      <p className="font-semibold text-foreground">Continue Learning</p>
+                      <p className="text-sm text-primary font-medium mt-1">
                         Module {currentModule.order}: {currentModule.title}
                       </p>
                     </div>
-                    <Button onClick={handleContinue} className="gap-2">
-                      Continue
-                      <ArrowRight className="h-4 w-4" />
+                    <Button onClick={handleContinue} className="gap-2 shadow-lg shadow-primary/20 transition-all hover:scale-105 hover:bg-primary hover:text-primary-foreground group-hover/continue:shadow-primary/40">
+                      Continue Learning
+                      <ArrowRight className="h-4 w-4 group-hover/continue:translate-x-1 transition-transform" />
                     </Button>
                   </div>
                 </div>
@@ -166,7 +168,8 @@ export function Dashboard() {
         </div>
       </div>
 
-      <Card>
+      <Card className="relative overflow-hidden transition-all duration-300 transform-gpu group hover:shadow-xl hover:shadow-primary/10 bg-gradient-to-br from-card to-card/50">
+        <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/5 transition-colors duration-500 pointer-events-none" />
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Target className="h-5 w-5" />
@@ -174,14 +177,14 @@ export function Dashboard() {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="flex items-center gap-2 overflow-x-auto pb-2">
-            {modules.map((module, index) => {
+          <div className="flex items-center gap-2 overflow-x-auto pb-4 scrollbar-thin scrollbar-thumb-primary/20 scrollbar-track-transparent">
+            {Array.isArray(modules) && modules.map((module, index) => {
               const progress = userProgress.find((p) => p.moduleId === module.id)
               const isCompleted = progress?.completed
               const isCurrent = index === currentModuleIndex
 
               return (
-                <div key={module.id} className="flex items-center">
+                <div key={module.id} className="flex items-center group/path">
                   <button
                     onClick={() => {
                       if (index <= currentModuleIndex || isCompleted) {
@@ -190,25 +193,25 @@ export function Dashboard() {
                       }
                     }}
                     disabled={index > currentModuleIndex && !isCompleted}
-                    className={`flex flex-col items-center justify-center p-4 rounded-lg border-2 min-w-[100px] transition-all ${
-                      isCompleted
-                        ? 'border-green-500 bg-green-500/10'
-                        : isCurrent
-                          ? 'border-primary bg-primary/10'
-                          : index > currentModuleIndex
-                            ? 'border-muted bg-muted/50 opacity-50 cursor-not-allowed'
-                            : 'border-muted hover:border-primary/50'
-                    }`}
+                    className={`flex flex-col items-center justify-center p-4 rounded-xl border-2 min-w-[110px] transition-all duration-300 transform-gpu ${isCompleted
+                      ? 'border-green-500 bg-green-500/10 hover:-translate-y-2 hover:shadow-lg hover:shadow-green-500/20'
+                      : isCurrent
+                        ? 'border-primary bg-primary/10 hover:-translate-y-2 hover:shadow-xl hover:shadow-primary/30 ring-2 ring-primary/20 ring-offset-2 ring-offset-background scale-110'
+                        : index > currentModuleIndex
+                          ? 'border-muted bg-muted/20 opacity-40 cursor-not-allowed'
+                          : 'border-muted hover:border-primary/50 hover:-translate-y-1 hover:bg-primary/5'
+                      }`}
+                    style={{ perspective: '1000px', transformStyle: 'preserve-3d' }}
                   >
                     {isCompleted ? (
-                      <CheckCircle2 className="h-8 w-8 text-green-600 dark:text-green-400 mb-2" />
+                      <CheckCircle2 className="h-8 w-8 text-green-600 dark:text-green-400 mb-2" style={{ transform: 'translateZ(15px)' }} />
                     ) : (
-                      <span className="text-2xl font-bold mb-2">{module.order}</span>
+                      <span className="text-2xl font-bold mb-2" style={{ transform: 'translateZ(20px)' }}>{module.order}</span>
                     )}
-                    <span className="text-xs text-center">{module.title}</span>
+                    <span className="text-xs text-center font-medium" style={{ transform: 'translateZ(10px)' }}>{module.title}</span>
                   </button>
                   {index < modules.length - 1 && (
-                    <ArrowRight className="h-4 w-4 mx-2 text-muted-foreground shrink-0" />
+                    <ArrowRight className={`h-5 w-5 mx-3 shrink-0 transition-colors duration-300 ${isCompleted || isCurrent ? 'text-primary' : 'text-muted-foreground'}`} />
                   )}
                 </div>
               )

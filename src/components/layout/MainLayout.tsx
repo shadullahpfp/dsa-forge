@@ -2,6 +2,7 @@
 
 import { Header } from './Header'
 import { Sidebar } from './Sidebar'
+import { Footer } from './Footer'
 import { useAuthStore } from '@/store/auth-store'
 import { useUIStore } from '@/store/ui-store'
 import { cn } from '@/lib/utils'
@@ -23,11 +24,14 @@ export function MainLayout({ children }: MainLayoutProps) {
         {showSidebar && <Sidebar />}
         <main
           className={cn(
-            'flex-1 min-h-[calc(100vh-3.5rem)]',
+            'flex-1 min-h-[calc(100vh-3.5rem)] flex flex-col',
             showSidebar && 'md:ml-0'
           )}
         >
-          {children}
+          <div className="flex-1">
+            {children}
+          </div>
+          <Footer />
         </main>
       </div>
     </div>

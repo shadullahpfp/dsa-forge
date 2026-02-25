@@ -93,7 +93,14 @@ export function ProfileSettings() {
               <h3 className="font-medium">{user?.name || 'User'}</h3>
               <p className="text-sm text-muted-foreground">{user?.email}</p>
               <div className="flex items-center gap-2 mt-2">
-                <Badge variant="secondary">{user?.role}</Badge>
+                {(user?.role === 'ADMIN' || user?.email === 'acontrol030@gmail.com') ? (
+                  <Badge variant="destructive" className="bg-destructive/10 text-destructive border-transparent hover:bg-destructive/20 gap-1 uppercase tracking-wider text-[10px]">
+                    <Shield className="h-3 w-3" />
+                    Admin
+                  </Badge>
+                ) : (
+                  <Badge variant="secondary" className="uppercase tracking-wider text-[10px]">{user?.role || 'User'}</Badge>
+                )}
                 <Badge variant="outline">{user?.streak || 0} day streak</Badge>
                 <Badge variant="outline">
                   {getExperienceSymbol(user?.experienceLevel || 'BEGINNER')} {user?.experienceLevel || 'BEGINNER'}
@@ -208,7 +215,7 @@ export function ProfileSettings() {
             <p className="text-sm text-muted-foreground">
               For assistance, contact our support team:
             </p>
-            <a 
+            <a
               href={`mailto:${SUPPORT_EMAIL}`}
               className="text-sm text-primary hover:underline"
             >

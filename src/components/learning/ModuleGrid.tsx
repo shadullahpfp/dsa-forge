@@ -38,7 +38,7 @@ export function ModuleGrid() {
       </div>
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {modules.map((module, index) => {
+        {Array.isArray(modules) && modules.map((module, index) => {
           const progress = userProgress.find((p) => p.moduleId === module.id)
           const isCompleted = progress?.completed || false
           const locked = isModuleLocked(index)
