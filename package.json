@@ -11,7 +11,8 @@
     "db:push": "prisma db push",
     "db:migrate": "prisma migrate deploy",
     "db:seed": "npx tsx prisma/seed.ts",
-    "render-build": "DATABASE_URL=file:./db/custom.db bun x prisma db push && bun run build"
+    "render-build": "DATABASE_URL=file:./db/custom.db bun x prisma db push && bun run build",
+    "postinstall": "node -e \"const fs=require('fs'); if(!fs.existsSync('.env')) fs.writeFileSync('.env', 'DATABASE_URL=file:./db/custom.db\\nNEXTAUTH_URL=http://localhost:3000\\nNEXTAUTH_SECRET=fallback_secret_for_build_12345\\n');\""
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",
