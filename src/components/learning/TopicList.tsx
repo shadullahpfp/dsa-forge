@@ -40,7 +40,7 @@ export function TopicList({ module: propModule, onProblemSelect }: TopicListProp
           // Update the current module with full problem data
           setCurrentModule({
             ...currentModule,
-            problems: problems
+            problems: problems.problems || []
           })
         } catch (error) {
           console.error('Error fetching module data:', error)

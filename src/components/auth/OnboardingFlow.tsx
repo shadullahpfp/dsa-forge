@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -37,10 +37,20 @@ export function OnboardingFlow() {
   const { user, updateUser } = useAuthStore()
   const { setCurrentView } = useUIStore()
   const [step, setStep] = useState(0)
-  const [name, setName] = useState(user?.name || '')
+  const [name, setName] = useState('')
   const [preferredLanguage, setPreferredLanguage] = useState('javascript')
   const [experienceLevel, setExperienceLevel] = useState('BEGINNER')
   const [isLoading, setIsLoading] = useState(false)
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+    if (user?.name) {
+      setName(user.name)
+    }
+  }, [user?.name])
+
+  if (!mounted) return null;
 
   const handleNext = async () => {
     if (step === 0 && name.trim()) {
@@ -124,20 +134,18 @@ export function OnboardingFlow() {
           {experienceLevels.map((level) => (
             <Card
               key={level.value}
-              className={`cursor-pointer transition-all ${
-                experienceLevel === level.value
-                  ? 'border-primary bg-primary/5'
-                  : 'hover:border-primary/50'
-              }`}
+              className={`cursor-pointer transition-all ${experienceLevel === level.value
+                ? 'border-primary bg-primary/5'
+                : 'hover:border-primary/50'
+                }`}
               onClick={() => setExperienceLevel(level.value)}
             >
               <CardContent className="p-4 flex items-center gap-4">
                 <div
-                  className={`h-12 w-12 rounded-full flex items-center justify-center text-xl font-bold ${
-                    experienceLevel === level.value
-                      ? 'bg-primary text-primary-foreground'
-                      : 'bg-muted'
-                  }`}
+                  className={`h-12 w-12 rounded-full flex items-center justify-center text-xl font-bold ${experienceLevel === level.value
+                    ? 'bg-primary text-primary-foreground'
+                    : 'bg-muted'
+                    }`}
                 >
                   {level.symbol}
                 </div>
@@ -163,9 +171,8 @@ export function OnboardingFlow() {
             {steps.map((_, index) => (
               <div
                 key={index}
-                className={`h-2 w-8 rounded-full transition-colors ${
-                  index <= step ? 'bg-primary' : 'bg-muted'
-                }`}
+                className={`h-2 w-8 rounded-full transition-colors ${index <= step ? 'bg-primary' : 'bg-muted'
+                  }`}
               />
             ))}
           </div>

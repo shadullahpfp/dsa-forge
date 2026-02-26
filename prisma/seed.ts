@@ -11,6 +11,7 @@ const modules = [
     slug: 'programming-foundations',
     icon: 'Code2',
     color: 'blue',
+    published: true,
   },
   {
     order: 1,
@@ -19,6 +20,7 @@ const modules = [
     slug: 'arrays-strings',
     icon: 'Layers',
     color: 'green',
+    published: true,
   },
   {
     order: 2,
@@ -27,6 +29,7 @@ const modules = [
     slug: 'recursion-backtracking',
     icon: 'GitBranch',
     color: 'purple',
+    published: true,
   },
   {
     order: 3,

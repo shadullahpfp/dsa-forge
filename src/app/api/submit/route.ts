@@ -47,6 +47,12 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Problem not found' }, { status: 404 })
     }
 
+    // Verify user exists
+    const dbUser = await db.user.findUnique({ where: { id: userId } })
+    if (!dbUser) {
+      return NextResponse.json({ error: 'User not found. Try logging out and back in.' }, { status: 401 })
+    }
+
     await new Promise((resolve) => setTimeout(resolve, 1000))
     const result = simulateSubmission(code, language, testCases || [])
 

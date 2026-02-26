@@ -10,7 +10,6 @@ export async function GET(request: NextRequest) {
     const isAdmin = session?.user?.role === 'ADMIN' || session?.user?.email === ADMIN_EMAIL
 
     const modules = await db.module.findMany({
-      where: isAdmin ? undefined : { published: true },
       orderBy: { order: 'asc' },
       include: {
         topics: {
