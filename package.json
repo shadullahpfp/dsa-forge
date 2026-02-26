@@ -4,14 +4,14 @@
   "private": true,
   "scripts": {
     "dev": "next dev -p 3000",
-    "build": "next build && cp -r .next/static .next/standalone/.next/ && cp -r public .next/standalone/ && mkdir -p .next/standalone/db && (cp prisma/db/custom.db .next/standalone/db/custom.db || true) && (cp .env .next/standalone/ || true)",
-    "start": "NODE_ENV=production bun .next/standalone/server.js",
+    "build": "prisma generate && next build",
+    "start": "next start",
     "lint": "eslint .",
     "db:generate": "prisma generate",
     "db:push": "prisma db push",
     "db:migrate": "prisma migrate deploy",
     "db:seed": "npx tsx prisma/seed.ts",
-    "render-build": "DATABASE_URL=file:./db/custom.db bun x prisma db push && bun run build",
+    "render-build": "prisma generate && prisma db push && next build",
     "postinstall": "node -e \"const fs=require('fs'); if(!fs.existsSync('.env')) fs.writeFileSync('.env', 'DATABASE_URL=file:./db/custom.db\\nNEXTAUTH_URL=http://localhost:3000\\nNEXTAUTH_SECRET=fallback_secret_for_build_12345\\n');\""
   },
   "dependencies": {
