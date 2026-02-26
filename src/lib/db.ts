@@ -13,13 +13,7 @@ const globalForPrisma = globalThis as unknown as {
 }
 
 let dbUrl = process.env.DATABASE_URL
-if (process.env.NODE_ENV === 'production') {
-  if (!dbUrl || dbUrl.startsWith('file:./')) {
-    const rawPath = dbUrl ? dbUrl.replace('file:./', '') : 'db/custom.db';
-    dbUrl = `file://${path.join(process.cwd(), rawPath)}`
-    console.log("STANDALONE OVERRIDE DATABASE URL: ", dbUrl)
-  }
-}
+// Removing the standalone sqlite database override as we are using postgresql
 
 export const db =
   globalForPrisma.prisma ??

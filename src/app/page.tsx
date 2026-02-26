@@ -42,6 +42,11 @@ export default function Home() {
   const { currentView, setCurrentView, setCurrentModuleId, setCurrentProblemId } = useUIStore()
   const { modules, currentModule, setModules, setCurrentModule, userProgress, setUserProgress, setDailyChallenge, dailyChallenge } = useProblemStore()
   const [dataLoaded, setDataLoaded] = useState(false)
+  const [isMounted, setIsMounted] = useState(false)
+
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
 
   // Check session on mount
   useEffect(() => {
@@ -414,7 +419,7 @@ export default function Home() {
   )
 
   // Loading state
-  if (isLoading) {
+  if (!isMounted || isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary" />

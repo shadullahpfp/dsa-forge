@@ -28,18 +28,18 @@ export async function getAdminData() {
 
 export async function createModule(data: any) {
     if (!(await isAdmin())) throw new Error('Unauthorized')
-    const module = await db.module.create({ data })
+    const newModule = await db.module.create({ data })
     revalidatePath('/admin')
     revalidatePath('/')
-    return module
+    return newModule
 }
 
 export async function updateModule(id: string, data: any) {
     if (!(await isAdmin())) throw new Error('Unauthorized')
-    const module = await db.module.update({ where: { id }, data })
+    const updatedModule = await db.module.update({ where: { id }, data })
     revalidatePath('/admin')
     revalidatePath('/')
-    return module
+    return updatedModule
 }
 
 export async function deleteModule(id: string) {

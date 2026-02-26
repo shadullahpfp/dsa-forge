@@ -23,10 +23,6 @@ export function AdminContent() {
     const [probSlug, setProbSlug] = useState('')
     const [probModuleId, setProbModuleId] = useState('')
 
-    useEffect(() => {
-        loadData()
-    }, [])
-
     async function loadData() {
         setLoading(true)
         try {
@@ -35,6 +31,11 @@ export function AdminContent() {
         } catch (e) { console.error(e) }
         setLoading(false)
     }
+
+    useEffect(() => {
+        // eslint-disable-next-line
+        loadData()
+    }, [])
 
     async function handleTogglePublish(m: any) {
         await updateModule(m.id, { published: !m.published })
