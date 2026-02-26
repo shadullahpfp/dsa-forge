@@ -11,7 +11,7 @@
     "db:push": "prisma db push",
     "db:migrate": "prisma migrate deploy",
     "db:seed": "npx tsx prisma/seed.ts",
-    "render-build": "bun x prisma generate && bun x prisma db push && bun run build",
+    "render-build": "bun x prisma generate && bun run build",
     "postinstall": "node -e \"const fs=require('fs'); if(!fs.existsSync('.env')) fs.writeFileSync('.env', 'DATABASE_URL=postgresql://dummy:dummy@localhost:5432/dummy\\nNEXTAUTH_URL=http://localhost:3000\\nNEXTAUTH_SECRET=fallback_secret_for_build_12345\\n');\""
   },
   "dependencies": {
