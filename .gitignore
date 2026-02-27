@@ -49,3 +49,18 @@ prompt
 server.log
 # Skills directory
 /skills/
+
+# Local databases
+*.db
+*.sqlite
+*.sqlite-journal
+/prisma/db/
+/prisma/*.db
+/prisma/*.sqlite
+
+# Uploads and temporary media
+/upload/
+
+# User worklogs and scratchpads
+worklog.md
+scratchpad.*
