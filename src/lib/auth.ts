@@ -8,6 +8,7 @@ import { ADMIN_EMAIL, ROLES } from './config'
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(db),
+  secret: process.env.NEXTAUTH_SECRET,
   session: {
     strategy: 'jwt',
     maxAge: 30 * 24 * 60 * 60, // 30 days
@@ -87,7 +88,7 @@ export const authOptions: NextAuthOptions = {
       if (user) {
         // Admin role determination - single source of truth
         const isAdmin = user.email === ADMIN_EMAIL
-        
+
         token.id = user.id
         token.role = isAdmin ? ROLES.ADMIN : (user.role || ROLES.USER)
         token.preferredLanguage = user.preferredLanguage
@@ -147,7 +148,7 @@ export async function verifyAdminRole(userId: string): Promise<boolean> {
     where: { id: userId },
     select: { email: true, role: true },
   })
-  
+
   return user?.email === ADMIN_EMAIL || user?.role === ROLES.ADMIN
 }
 
