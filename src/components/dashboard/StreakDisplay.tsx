@@ -27,7 +27,7 @@ export function StreakDisplay() {
   const streak = user?.streak || 0
 
   return (
-    <Card className="overflow-hidden">
+    <Card className="overflow-hidden card-premium hover-elevate group">
       <CardContent className="p-6">
         <div className="flex items-center gap-4">
           <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-orange-500 to-red-600 text-white text-2xl">
@@ -54,13 +54,12 @@ export function StreakDisplay() {
               return (
                 <div
                   key={i}
-                  className={`h-8 rounded-md flex items-center justify-center text-xs font-medium transition-colors ${
-                    isCompleted
+                  className={`h-8 rounded-md flex items-center justify-center text-xs font-medium transition-colors ${isCompleted
                       ? 'bg-green-500/20 text-green-600 dark:text-green-400'
                       : isToday
                         ? 'bg-primary/10 text-primary border-2 border-dashed border-primary/30'
                         : 'bg-muted text-muted-foreground'
-                  }`}
+                    }`}
                 >
                   {dayDate.toLocaleDateString('en', { weekday: 'short' }).charAt(0)}
                 </div>

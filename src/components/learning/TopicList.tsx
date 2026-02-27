@@ -118,7 +118,7 @@ export function TopicList({ module: propModule, onProblemSelect }: TopicListProp
 
               return (
                 <Card key={topic.id} className={cn(
-                  'transition-all',
+                  'card-premium transition-smooth',
                   isCompleted && 'border-green-500/50'
                 )}>
                   <CardContent className="p-4">
@@ -167,8 +167,8 @@ export function TopicList({ module: propModule, onProblemSelect }: TopicListProp
                 <Card
                   key={problem.id}
                   className={cn(
-                    'transition-all cursor-pointer hover:-translate-y-1 hover:shadow-lg hover:shadow-primary/10 border-2',
-                    isActive ? 'border-primary ring-2 ring-primary/20 bg-primary/5' : 'border-transparent hover:border-primary/30'
+                    'card-premium hover-elevate cursor-pointer border-2 transition-smooth',
+                    isActive ? 'border-primary ring-1 ring-primary/20 bg-primary/5 shadow-md' : 'border-transparent hover:border-primary/30'
                   )}
                   onClick={() => handleProblemClick(problem)}
                 >

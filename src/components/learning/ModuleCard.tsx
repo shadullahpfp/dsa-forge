@@ -68,10 +68,10 @@ export function ModuleCard({ module, index, isLocked, isCompleted, progress }: M
   return (
     <Card
       className={cn(
-        'relative overflow-hidden transition-all duration-300 transform-gpu group',
+        'relative overflow-hidden group card-glass shadow-sm transition-smooth',
         isLocked
-          ? 'opacity-60 cursor-not-allowed'
-          : 'cursor-pointer hover:border-primary/50 hover:scale-[1.03] hover:-translate-y-1 hover:shadow-[var(--card-shadow-hover)] shadow-[var(--card-shadow)] hover:z-10 bg-gradient-to-br from-card to-card/50'
+          ? 'opacity-60 cursor-not-allowed border-dashed'
+          : 'cursor-pointer hover-elevate'
       )}
       style={{ perspective: '1000px', transformStyle: 'preserve-3d' }}
       onClick={handleClick}

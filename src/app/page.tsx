@@ -222,7 +222,7 @@ export default function Home() {
         </div>
 
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-          <Card className="border-primary/20">
+          <Card className="card-glass hover-elevate border border-primary/20 transition-smooth">
             <CardHeader>
               <div className="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
                 <BookOpen className="h-6 w-6 text-primary" />
@@ -235,7 +235,7 @@ export default function Home() {
             </CardHeader>
           </Card>
 
-          <Card className="border-primary/20">
+          <Card className="card-glass hover-elevate border border-primary/20 transition-smooth">
             <CardHeader>
               <div className="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
                 <Zap className="h-6 w-6 text-primary" />
@@ -248,7 +248,7 @@ export default function Home() {
             </CardHeader>
           </Card>
 
-          <Card className="border-primary/20">
+          <Card className="card-glass hover-elevate border border-primary/20 transition-smooth">
             <CardHeader>
               <div className="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
                 <Code2 className="h-6 w-6 text-primary" />
@@ -261,7 +261,7 @@ export default function Home() {
             </CardHeader>
           </Card>
 
-          <Card className="border-primary/20">
+          <Card className="card-glass hover-elevate border border-primary/20 transition-smooth">
             <CardHeader>
               <div className="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
                 <Target className="h-6 w-6 text-primary" />
@@ -274,7 +274,7 @@ export default function Home() {
             </CardHeader>
           </Card>
 
-          <Card className="border-primary/20">
+          <Card className="card-glass hover-elevate border border-primary/20 transition-smooth">
             <CardHeader>
               <div className="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
                 <Trophy className="h-6 w-6 text-primary" />
@@ -287,7 +287,7 @@ export default function Home() {
             </CardHeader>
           </Card>
 
-          <Card className="border-primary/20">
+          <Card className="card-glass hover-elevate border border-primary/20 transition-smooth">
             <CardHeader>
               <div className="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
                 <Users className="h-6 w-6 text-primary" />
@@ -332,9 +332,9 @@ export default function Home() {
             return (
               <div
                 key={mod.order}
-                className={`relative p-4 rounded-xl border bg-card text-center transition-all ${index === 0
-                  ? 'border-primary bg-primary/5'
-                  : 'opacity-75'
+                className={`relative p-4 rounded-xl border-2 text-center transition-smooth hover-elevate ${index === 0
+                  ? 'border-primary bg-primary/5 card-premium shadow-md'
+                  : 'border-transparent bg-muted/40 opacity-75'
                   }`}
               >
                 {index > 0 && (
@@ -421,8 +421,18 @@ export default function Home() {
   // Loading state
   if (!isMounted || isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary" />
+      <div className="min-h-screen flex flex-col items-center justify-center space-y-8 bg-background">
+        <div className="flex flex-col items-center gap-4 animate-pulse">
+          <div className="h-16 w-16 bg-primary/20 rounded-2xl shadow-lg shadow-primary/10" />
+          <div className="h-6 w-32 bg-muted rounded-full" />
+        </div>
+        <div className="space-y-4 w-full max-w-md px-6 opacity-60">
+          <div className="h-28 w-full bg-muted/40 rounded-2xl animate-pulse" />
+          <div className="grid grid-cols-2 gap-4">
+            <div className="h-24 w-full bg-muted/30 rounded-2xl animate-pulse delay-75" />
+            <div className="h-24 w-full bg-muted/30 rounded-2xl animate-pulse delay-150" />
+          </div>
+        </div>
       </div>
     )
   }

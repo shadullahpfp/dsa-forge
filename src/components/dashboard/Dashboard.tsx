@@ -77,7 +77,7 @@ export function Dashboard() {
 
       <div className="grid gap-6 lg:grid-cols-3">
         <div className="lg:col-span-2 space-y-6">
-          <Card className="relative overflow-hidden transition-all duration-300 transform-gpu group hover:shadow-xl hover:shadow-primary/10 bg-gradient-to-br from-card to-card/50">
+          <Card className="relative overflow-hidden card-glass hover-elevate group">
             <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/5 transition-colors duration-500 pointer-events-none" />
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
@@ -168,7 +168,7 @@ export function Dashboard() {
         </div>
       </div>
 
-      <Card className="relative overflow-hidden transition-all duration-300 transform-gpu group hover:shadow-xl hover:shadow-primary/10 bg-gradient-to-br from-card to-card/50">
+      <Card className="relative overflow-hidden card-glass hover-elevate group">
         <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/5 transition-colors duration-500 pointer-events-none" />
         <CardHeader>
           <CardTitle className="flex items-center gap-2">

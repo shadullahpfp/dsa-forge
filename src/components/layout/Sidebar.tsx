@@ -102,7 +102,7 @@ export function Sidebar({ className }: SidebarProps) {
       )}
       <aside
         className={cn(
-          'fixed md:sticky top-14 left-0 z-40 h-[calc(100vh-3.5rem)] w-64 border-r border-border bg-background transition-transform duration-300',
+          'fixed md:sticky top-14 left-0 z-40 h-[calc(100vh-3.5rem)] w-64 bg-background/95 backdrop-blur-xl border-r border-border/40 shadow-[4px_0_24px_rgba(0,0,0,0.02)] transition-transform duration-300',
           mobileMenuOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0',
           className
         )}
@@ -143,9 +143,9 @@ export function Sidebar({ className }: SidebarProps) {
                     <Button
                       variant={isActive ? 'secondary' : 'ghost'}
                       className={cn(
-                        'w-full justify-start gap-3 h-auto py-2.5 transition-all duration-300 relative overflow-hidden',
+                        'w-full justify-start gap-3 h-auto py-2.5 transition-smooth relative overflow-hidden',
                         locked ? 'opacity-50 cursor-not-allowed hover:bg-transparent animate-pulse' : 'hover:bg-primary/5 hover:translate-x-1',
-                        isActive && 'bg-primary/10 hover:bg-primary/15 dark:bg-primary/20 ring-2 ring-primary/40 shadow-lg'
+                        isActive && 'bg-primary/10 hover:bg-primary/15 dark:bg-primary/20 shadow-md ring-1 ring-primary/20 translate-x-1'
                       )}
                       onClick={() => !locked && handleModuleClick(module)}
                       disabled={locked}

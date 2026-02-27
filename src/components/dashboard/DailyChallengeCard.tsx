@@ -13,14 +13,16 @@ export function DailyChallengeCard() {
   const { setCurrentView, setCurrentProblemId, setThinkModalOpen } = useUIStore()
 
   const handleStartChallenge = () => {
-    if (dailyChallenge?.problem) {
-      setCurrentProblemId(dailyChallenge.problem.id)
+    const p = (dailyChallenge as any)?.problem || dailyChallenge
+    if (p) {
+      setCurrentProblemId(p.id)
       setCurrentView('problem')
       setThinkModalOpen(true)
     }
   }
 
-  if (!dailyChallenge?.problem) {
+  const p = (dailyChallenge as any)?.problem || dailyChallenge
+  if (!p) {
     return (
       <Card>
         <CardHeader>
@@ -40,7 +42,7 @@ export function DailyChallengeCard() {
     )
   }
 
-  const problem = dailyChallenge.problem as Problem
+  const problem = p as Problem
   const today = new Date()
   const formattedDate = today.toLocaleDateString('en-US', {
     weekday: 'long',
@@ -49,7 +51,7 @@ export function DailyChallengeCard() {
   })
 
   return (
-    <Card className="overflow-hidden border-primary/20">
+    <Card className="overflow-hidden border-primary/20 card-premium hover-elevate group">
       <div className="bg-gradient-to-r from-primary/5 to-primary/10 px-6 py-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
@@ -77,7 +79,7 @@ export function DailyChallengeCard() {
               {problem.difficulty === 'EASY' ? 'Beginner' : problem.difficulty === 'MEDIUM' ? 'Intermediate' : 'Advanced'}
             </Badge>
             <Badge variant="outline">
-              Module {problem.module?.order || 0}: {problem.module?.title || 'Unknown'}
+              Module {(problem as any).module?.order ?? 0}: {(problem as any).module?.title || 'Unknown'}
             </Badge>
           </div>
 
