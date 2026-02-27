@@ -14,11 +14,14 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { useAuthStore } from '@/store/auth-store'
 import { useUIStore } from '@/store/ui-store'
 import { useState, useSyncExternalStore } from 'react'
+import { signIn, signOut } from 'next-auth/react'
+import { useRouter } from 'next/navigation'
 
 // Empty store for hydration
 const emptyStore = { subscribe: () => () => { } }
 
 export function Header() {
+  const router = useRouter()
   const { theme, setTheme } = useTheme()
   const { user, isAuthenticated, logout } = useAuthStore()
   const { currentView, setCurrentView, setAuthModalOpen, setAuthModalMode, mobileMenuOpen, setMobileMenuOpen } = useUIStore()
@@ -31,9 +34,8 @@ export function Header() {
 
   const handleLogout = async () => {
     try {
-      await fetch('/api/auth/signout', { method: 'POST' })
       logout()
-      setCurrentView('landing')
+      await signOut({ callbackUrl: '/' })
     } catch (error) {
       console.error('Logout error:', error)
     }
@@ -41,7 +43,7 @@ export function Header() {
 
   const handleGoogleSignIn = async () => {
     try {
-      window.location.href = '/api/auth/signin/google'
+      await signIn('google', { callbackUrl: '/dashboard' })
     } catch (error) {
       console.error('Google sign in error:', error)
     }
@@ -69,7 +71,14 @@ export function Header() {
           )}
           <div
             className="flex items-center gap-2 cursor-pointer"
-            onClick={() => setCurrentView(isAuthenticated ? 'dashboard' : 'landing')}
+            onClick={() => {
+              if (isAuthenticated) {
+                setCurrentView('dashboard')
+                router.push('/dashboard')
+              } else {
+                router.push('/')
+              }
+            }}
           >
             <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground font-bold">
               DF

@@ -40,29 +40,8 @@ export function LoginForm({ onSwitchToSignup, onClose }: LoginFormProps) {
         return
       }
 
-      const response = await fetch('/api/auth/session')
-      const session = await response.json()
-
-      if (session?.user) {
-        setUser({
-          id: session.user.id,
-          email: session.user.email,
-          name: session.user.name,
-          image: session.user.image,
-          role: session.user.role || 'USER',
-          preferredLanguage: session.user.preferredLanguage || 'javascript',
-          experienceLevel: session.user.experienceLevel || 'BEGINNER',
-          streak: session.user.streak || 0,
-          onboardingCompleted: session.user.onboardingCompleted || false,
-        })
-
-        if (!session.user.onboardingCompleted) {
-          setCurrentView('onboarding')
-        } else {
-          setCurrentView('dashboard')
-        }
-        onClose()
-      }
+      onClose()
+      window.location.href = '/dashboard'
     } catch (err) {
       setError('Something went wrong. Please try again.')
     } finally {
@@ -71,7 +50,7 @@ export function LoginForm({ onSwitchToSignup, onClose }: LoginFormProps) {
   }
 
   const handleGoogleSignIn = () => {
-    signIn('google', { callbackUrl: '/' })
+    signIn('google', { callbackUrl: '/dashboard' })
   }
 
   return (
