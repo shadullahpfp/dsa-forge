@@ -4,8 +4,6 @@
 
 A production-grade DSA learning platform designed to take developers from zero to advanced proficiency.
 
----
-
 ## Overview
 
 DSA FORGE provides a structured learning path for mastering Data Structures and Algorithms. The platform emphasizes understanding over memorization, with a mandatory think-first approach before coding.
@@ -38,7 +36,6 @@ DSA FORGE provides a structured learning path for mastering Data Structures and 
 - Email/Password authentication
 - Secure session management
 
----
 
 ## Technology Stack
 
@@ -52,7 +49,6 @@ DSA FORGE provides a structured learning path for mastering Data Structures and 
 | Authentication | NextAuth.js |
 | State Management | Zustand |
 
----
 
 ## Installation
 
@@ -62,7 +58,6 @@ DSA FORGE provides a structured learning path for mastering Data Structures and 
 
 ### Setup
 
-```bash
 # Clone the repository
 git clone https://github.com/yourusername/dsa-forge.git
 cd dsa-forge
@@ -79,15 +74,12 @@ bun run db:seed
 
 # Start development server
 bun run dev
-```
 
----
 
 ## Configuration
 
 ### Environment Variables
 
-```env
 # Database
 DATABASE_URL=file:./db/custom.db
 
@@ -98,13 +90,9 @@ NEXTAUTH_SECRET=your-secret-key
 # Google OAuth (optional)
 GOOGLE_CLIENT_ID=your-client-id
 GOOGLE_CLIENT_SECRET=your-client-secret
-```
-
----
 
 ## Project Structure
 
-```
 dsa-forge/
 ├── prisma/
 │   ├── schema.prisma
@@ -118,15 +106,10 @@ dsa-forge/
 │   ├── lib/
 │   └── store/
 └── package.json
-```
-
----
 
 ## Contact & Support
 
 For inquiries and support: acontrol030@gmail.com
-
----
 
 ## License
 
