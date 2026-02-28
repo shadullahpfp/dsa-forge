@@ -139,7 +139,7 @@ export function AdminContent() {
                     )}
 
                     <div className="space-y-4">
-                        {data.modules.map((m: any) => (
+                        {(data.modules || []).map((m: any) => (
                             <div key={m.id} className="flex flex-col md:flex-row md:items-center justify-between p-4 border rounded-lg hover:border-primary/30 transition-colors">
                                 <div>
                                     <div className="flex items-center gap-2">
@@ -201,7 +201,7 @@ export function AdminContent() {
                                         onChange={e => setProbModuleId(e.target.value)}
                                     >
                                         <option value="">-- Select Module --</option>
-                                        {data.modules.map((m: any) => (
+                                        {(data.modules || []).map((m: any) => (
                                             <option key={m.id} value={m.id}>{m.title}</option>
                                         ))}
                                     </select>
@@ -215,8 +215,8 @@ export function AdminContent() {
                     )}
 
                     <div className="space-y-3">
-                        {data.problems.map((p: any) => {
-                            const assignedMod = data.modules.find((m: any) => m.id === p.moduleId)
+                        {(data.problems || []).map((p: any) => {
+                            const assignedMod = (data.modules || []).find((m: any) => m.id === p.moduleId)
                             return (
                                 <div key={p.id} className="flex items-center justify-between p-3 border rounded hover:bg-muted/10">
                                     <div>

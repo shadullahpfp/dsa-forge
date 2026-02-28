@@ -2,6 +2,7 @@
 
 import { Header } from '@/components/layout/Header'
 import { AuthModal } from '@/components/auth/AuthModal'
+import { Footer } from '@/components/layout/Footer'
 import { Button } from '@/components/ui/button'
 import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { useUIStore } from '@/store/ui-store'
@@ -106,78 +107,78 @@ export function LandingPageClient() {
                     </div>
 
                     <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-                        <Card className="card-glass hover-elevate border border-primary/20 transition-smooth">
+                        <Card className="card-glass hover-elevate border border-primary/20 transition-all duration-300 shadow-[0_8px_30px_rgb(0,0,0,0.12)] hover:shadow-primary/30 transform-gpu hover:-translate-y-2">
                             <CardHeader>
-                                <div className="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
+                                <div className="h-12 w-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4 shadow-inner ring-1 ring-white/10">
                                     <BookOpen className="h-6 w-6 text-primary" />
                                 </div>
-                                <CardTitle>Structured Learning Path</CardTitle>
-                                <CardDescription>
+                                <CardTitle className="tracking-tight">Structured Learning Path</CardTitle>
+                                <CardDescription className="text-base leading-relaxed">
                                     13 carefully designed modules taking you from programming foundations to advanced algorithms.
                                     No more wondering what to learn next.
                                 </CardDescription>
                             </CardHeader>
                         </Card>
 
-                        <Card className="card-glass hover-elevate border border-primary/20 transition-smooth">
+                        <Card className="card-glass hover-elevate border border-primary/20 transition-all duration-300 shadow-[0_8px_30px_rgb(0,0,0,0.12)] hover:shadow-primary/30 transform-gpu hover:-translate-y-2">
                             <CardHeader>
-                                <div className="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
+                                <div className="h-12 w-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4 shadow-inner ring-1 ring-white/10">
                                     <Zap className="h-6 w-6 text-primary" />
                                 </div>
-                                <CardTitle>Think Before You Code</CardTitle>
-                                <CardDescription>
+                                <CardTitle className="tracking-tight">Think Before You Code</CardTitle>
+                                <CardDescription className="text-base leading-relaxed">
                                     Our unique approach forces you to think through problems before coding.
                                     Build real problem-solving skills, not pattern matching.
                                 </CardDescription>
                             </CardHeader>
                         </Card>
 
-                        <Card className="card-glass hover-elevate border border-primary/20 transition-smooth">
+                        <Card className="card-glass hover-elevate border border-primary/20 transition-all duration-300 shadow-[0_8px_30px_rgb(0,0,0,0.12)] hover:shadow-primary/30 transform-gpu hover:-translate-y-2">
                             <CardHeader>
-                                <div className="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
+                                <div className="h-12 w-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4 shadow-inner ring-1 ring-white/10">
                                     <Code2 className="h-6 w-6 text-primary" />
                                 </div>
-                                <CardTitle>Multi-Language Support</CardTitle>
-                                <CardDescription>
+                                <CardTitle className="tracking-tight">Multi-Language Support</CardTitle>
+                                <CardDescription className="text-base leading-relaxed">
                                     JavaScript, TypeScript, Python, Java, C++, Go, and Rust.
                                     Learn in your preferred language, switch anytime.
                                 </CardDescription>
                             </CardHeader>
                         </Card>
 
-                        <Card className="card-glass hover-elevate border border-primary/20 transition-smooth">
+                        <Card className="card-glass hover-elevate border border-primary/20 transition-all duration-300 shadow-[0_8px_30px_rgb(0,0,0,0.12)] hover:shadow-primary/30 transform-gpu hover:-translate-y-2">
                             <CardHeader>
-                                <div className="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
+                                <div className="h-12 w-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4 shadow-inner ring-1 ring-white/10">
                                     <Target className="h-6 w-6 text-primary" />
                                 </div>
-                                <CardTitle>Daily Challenges</CardTitle>
-                                <CardDescription>
+                                <CardTitle className="tracking-tight">Daily Challenges</CardTitle>
+                                <CardDescription className="text-base leading-relaxed">
                                     One curated problem every day with topic rotation.
                                     Build consistency without the leaderboard addiction.
                                 </CardDescription>
                             </CardHeader>
                         </Card>
 
-                        <Card className="card-glass hover-elevate border border-primary/20 transition-smooth">
+                        <Card className="card-glass hover-elevate border border-primary/20 transition-all duration-300 shadow-[0_8px_30px_rgb(0,0,0,0.12)] hover:shadow-primary/30 transform-gpu hover:-translate-y-2">
                             <CardHeader>
-                                <div className="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
+                                <div className="h-12 w-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4 shadow-inner ring-1 ring-white/10">
                                     <Trophy className="h-6 w-6 text-primary" />
                                 </div>
-                                <CardTitle>Streak System</CardTitle>
-                                <CardDescription>
+                                <CardTitle className="tracking-tight">Streak System</CardTitle>
+                                <CardDescription className="text-base leading-relaxed">
                                     Track your consistency with a non-toxic streak system.
                                     Celebrate progress, not shame gaps.
                                 </CardDescription>
                             </CardHeader>
                         </Card>
 
-                        <Card className="card-glass hover-elevate border border-primary/20 transition-smooth">
+                        <Card className="card-glass hover-elevate border border-primary/20 transition-all duration-300 shadow-[0_8px_30px_rgb(0,0,0,0.12)] hover:shadow-primary/30 transform-gpu hover:-translate-y-2">
                             <CardHeader>
-                                <div className="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
+                                <div className="h-12 w-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4 shadow-inner ring-1 ring-white/10">
                                     <Users className="h-6 w-6 text-primary" />
                                 </div>
-                                <CardTitle>Interview Ready</CardTitle>
-                                <CardDescription>
+                                <CardTitle className="tracking-tight">Interview Ready</CardTitle>
+                                <CardDescription className="text-base leading-relaxed">
                                     Practice with real interview-style problems. Build confidence through understanding, not memorization.
                                 </CardDescription>
                             </CardHeader>
@@ -250,55 +251,7 @@ export function LandingPageClient() {
                     </div>
                 </div>
 
-                {/* Production Footer */}
-                <footer className="border-t relative overflow-hidden bg-gradient-to-b from-background to-primary/5 mt-20">
-                    <div className="container px-6 py-16 mx-auto max-w-7xl relative z-10">
-                        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-8">
-                            <div className="col-span-1 md:col-span-2 space-y-4">
-                                <div className="flex items-center gap-3">
-                                    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-primary-foreground font-bold text-lg shadow-lg shadow-primary/20">
-                                        DF
-                                    </div>
-                                    <span className="font-bold text-xl tracking-tight">DSA FORGE</span>
-                                </div>
-                                <p className="text-muted-foreground text-sm max-w-md leading-relaxed">
-                                    A production-grade platform dedicated to mastering Data Structures and Algorithms. Structured learning, interactive coding, and real-time progress tracking.
-                                </p>
-                            </div>
-
-                            <div className="space-y-4">
-                                <h4 className="font-semibold text-foreground">Resources</h4>
-                                <nav className="flex flex-col gap-3 text-sm">
-                                    <a href="/docs" className="text-muted-foreground hover:text-primary transition-colors w-fit">Documentation</a>
-                                    <a href="/about" className="text-muted-foreground hover:text-primary transition-colors w-fit">About Us</a>
-                                    <a href="/privacy" className="text-muted-foreground hover:text-primary transition-colors w-fit">Privacy Policy</a>
-                                    <a href="/terms" className="text-muted-foreground hover:text-primary transition-colors w-fit">Terms of Service</a>
-                                </nav>
-                            </div>
-
-                            <div className="space-y-4">
-                                <h4 className="font-semibold text-foreground">Contact</h4>
-                                <div className="text-sm text-muted-foreground space-y-2">
-                                    <p>Have questions or need support?</p>
-                                    <a href="mailto:acontrol030@gmail.com" className="block text-primary hover:underline transition-all">
-                                        acontrol030@gmail.com
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="border-t mt-16 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-muted-foreground">
-                            <p>© {new Date().getFullYear()} DSA FORGE. All rights reserved.</p>
-                            <div className="flex bg-primary/10 px-3 py-1.5 rounded-full text-xs font-medium text-primary">
-                                <span className="relative flex h-2 w-2 mr-2 self-center">
-                                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-                                    <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
-                                </span>
-                                All systems operational
-                            </div>
-                        </div>
-                    </div>
-                </footer>
+                <Footer />
             </div>
             <AuthModal />
         </>
