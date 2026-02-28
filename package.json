@@ -5,13 +5,13 @@
   "scripts": {
     "dev": "next dev -p 3000",
     "build": "npx prisma generate && next build && cp -r .next/static .next/standalone/.next/ && cp -r public .next/standalone/",
-    "start": "NODE_ENV=production HOSTNAME=0.0.0.0 node .next/standalone/server.js",
+    "start": "NODE_ENV=production HOSTNAME=0.0.0.0 PORT=3000 node .next/standalone/server.js",
     "lint": "eslint .",
     "db:generate": "prisma generate",
     "db:push": "prisma db push",
     "db:migrate": "prisma migrate deploy",
     "db:seed": "npx tsx prisma/seed.ts",
-    "render-build": "npx prisma generate && npm run build",
+    "render-build": "npx prisma generate && npx prisma db push && npm run build",
     "postinstall": "node -e \"const fs=require('fs'); if(!fs.existsSync('.env')) fs.writeFileSync('.env', 'DATABASE_URL=postgresql://dummy:dummy@localhost:5432/dummy\\nNEXTAUTH_URL=http://localhost:3000\\nNEXTAUTH_SECRET=fallback_secret_for_build_12345\\n');\""
   },
   "dependencies": {
